@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>نفذ المطلوب</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Tahoma', sans-serif;
+      color: white;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      text-align: center;
+      padding: 50px 10px;
+    }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #00ffff;
+      text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+      animation: fadeInDown 1s ease forwards;
+    }
+    .progress-container {
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto 30px;
+      height: 20px;
+      background-color: #444;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px #0ff6;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #0ff, #00f);
+      transition: width 0.5s ease;
+      border-radius: 10px;
+    }
+    .step {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #111a;
+      border: 2px solid #444;
+      border-radius: 12px;
+      padding: 15px 20px;
+      margin: 15px auto;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 0 10px #0ff2;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(20px);
+      transition: 0.5s ease;
+    }
+    .step.active {
+      opacity: 1;
+      pointer-events: auto;
+      animation: fadeInUp 0.8s ease forwards;
+    }
+    .step.completed {
+      border-color: lime;
+      background-color: #141414dd;
+    }
+    .step span {
+      text-align: right;
+      font-size: 16px;
+    }
+    .check {
+      font-size: 20px;
+    }
+    a {
+      color: white;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      justify-content: space-between;
+    }
+    .loading {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #fff;
+      border-top: 2px solid transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .final-section {
+      margin-top: 30px;
+    }
+    .final-message {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: red;
+      text-shadow: 0 0 5px red;
+    }
+    .final-buttons {
+      background: #111c;
+      border-radius: 12px;
+      border: 2px solid #444;
+      padding: 15px 10px;
+      max-width: 500px;
+      width: 100%;
+      margin: auto;
+      box-shadow: 0 0 12px #0ff4;
+    }
+    .final-buttons a {
+      display: block;
+      background-color: #555;
+      color: white;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      margin: 10px auto;
+      pointer-events: none;
+      opacity: 0.5;
+      transition: 0.3s;
+      box-shadow: 0 0 6px #000;
+    }
+    .final-buttons a.active {
+      background-color: #0c0;
+      pointer-events: auto;
+      opacity: 1;
+      box-shadow: 0 0 15px #0f0;
+    }
+    .final-buttons a:hover {
+      transform: scale(1.03);
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 480px) {
+      h2 { font-size: 20px; }
+      .step span { font-size: 14px; }
+      .final-message { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <h2>نفذ هذه الخطوات أولاً لكي يتم فتح لك رابط التحميل</h2>
+
+  <div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <div id="step1" class="step active">
+    <a href="#" onclick="completeStep(1, 'https://www.youtube.com/@MRGAMESFF-k3q'); return false;">
+      <span>📺🔔 اضغط هنا وقم بالاشتراك في قناة اليوتيوب 1 هذه وتفعيل زر الجرس</span>
+      <span id="check1">➡️</span>
+    </a>
+  </div>
+
+  <div id="step2" class="step">
+    <a href="#" onclick="rotateStepLinks(2, step2Links); return false;">
+      <span>👍💬 اضغط هنا وقم بعمل لايك وتعليق مميز للفيديو الذي ستراه</span>
+      <span id="check2">➡️</span>
+    </a>
+  </div>
+
+  <div id="step3" class="step">
+    <a href="#" onclick="completeStep(3, 'https://www.youtube.com/@DarkPandaff-1'); return false;">
+      <span>📺🔔 اضغط هنا وقم بالاشتراك في قناة اليوتيوب 2 هذه وتفعيل زر الجرس</span>
+      <span id="check3">➡️</span>
+    </a>
+  </div>
+
+  <div class="final-section">
+    <div id="finalMessage" class="final-message">❌ نفّذ الخطوات أولاً لكي يتم فتح رابط التحميل</div>
+    <div class="final-buttons">
+      <a id="btnDownload" href="#" onclick="goToDownload(); return false;">🔒 اضغط هنا لتحميل لعبة روبلوكس مهكرة اخر تحديث 2.679.762</a>
+    </div>
+  </div>
+
+  <script>
+    const STEP_EXPIRY_MS = 365 * 24 * 60 * 60 * 1000;
+    const STORAGE_KEY = 'stepsState'; // الخطوة 1
+    const STEP_KEYS = {
+      2: 'step2_done_v1_unique',
+      3: 'step3_done_v1_unique'
+    };
+
+    const step2Links = [
+      "https://youtu.be/VSpj927KYmc?si=3Y_eL2QQevqlPD6Y"
+    ];
+
+    window.onload = () => {
+      // خطوة 1
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+      if (saved.step1 && Date.now() - saved.timestamp <= STEP_EXPIRY_MS) {
+        document.getElementById('step1').classList.add('completed');
+        document.getElementById('check1').innerText = '✅';
+        document.getElementById('step2').classList.add('active');
+      }
+
+      // خطوة 2 و 3
+      for (let i = 2; i <= 3; i++) {
+        const state = JSON.parse(localStorage.getItem(STEP_KEYS[i]) || "{}");
+        if (state.done && Date.now() - state.timestamp <= STEP_EXPIRY_MS) {
+          document.getElementById('step' + i).classList.add('completed');
+          document.getElementById('check' + i).innerText = '✅';
+          const next = document.getElementById('step' + (i + 1));
+          if (next) next.classList.add('active');
+        }
+      }
+
+      unlockButtons();
+      updateProgressBar();
+    };
+
+    function saveStepState(step) {
+      const now = Date.now();
+      if (step === 1) {
+        const current = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+        current.step1 = true;
+        current.timestamp = now;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(current));
+      } else {
+        localStorage.setItem(STEP_KEYS[step], JSON.stringify({ done: true, timestamp: now }));
+      }
+    }
+
+    function completeStep(step, url) {
+      const check = document.getElementById('check' + step);
+      check.innerHTML = '<span class="loading"></span>';
+      window.open(url, '_blank');
+      setTimeout(() => {
+        document.getElementById('step' + step).classList.add('completed');
+        check.innerText = '✅';
+        const next = document.getElementById('step' + (step + 1));
+        if (next) next.classList.add('active');
+        saveStepState(step);
+        unlockButtons();
+        updateProgressBar();
+      }, 10000);
+    }
+
+    function rotateStepLinks(step, linksArray) {
+      const check = document.getElementById('check' + step);
+      const index = Math.floor(Math.random() * linksArray.length);
+      const url = linksArray[index];
+      check.innerHTML = '<span class="loading"></span>';
+      window.open(url, '_blank');
+      setTimeout(() => {
+        document.getElementById('step' + step).classList.add('completed');
+        check.innerText = '✅';
+        const next = document.getElementById('step' + (step + 1));
+        if (next) next.classList.add('active');
+        saveStepState(step);
+        unlockButtons();
+        updateProgressBar();
+      }, 10000);
+    }
+
+    function unlockButtons() {
+      if (
+        document.getElementById('step1').classList.contains('completed') &&
+        document.getElementById('step2').classList.contains('completed') &&
+        document.getElementById('step3').classList.contains('completed')
+      ) {
+        document.getElementById('finalMessage').innerText = '✅ تم تنفيذ كل الخطوات بنجاح';
+        document.getElementById('finalMessage').style.color = 'lime';
+        const btn = document.getElementById('btnDownload');
+        btn.classList.add('active');
+        btn.innerText = '🔓 اضغط هنا لتحميل لعبة روبلوكس مهكرة اخر تحديث 2.679.762';
+      }
+    }
+
+    function updateProgressBar() {
+      let done = 0;
+      for (let i = 1; i <= 3; i++) {
+        if (document.getElementById('step' + i).classList.contains('completed')) done++;
+      }
+      document.getElementById('progressBar').style.width = (done / 3) * 100 + '%';
+    }
+
+    function goToDownload() {
+      window.open('https://shr2.link/Py31Xa', '_blank');
+    }
+  </script>
+
+</body>
+</html>
